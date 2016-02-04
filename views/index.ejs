@@ -12,7 +12,12 @@
 </head>
 <body>
 <%- include partials/header.ejs %>
-  <div id="map" style="width: 100vw; height: 100vh"></div>
+  <div id="map"></div>
+  <div id="search" class="vert-centered-container">
+	<input type="text" class="vert-centered" placeholder="Where do you want to hang out tonight?">
+  </div>
+	
+	
   <script>
   //init map
   var map = L.map('map').setView([52.45,13.4], 9);
