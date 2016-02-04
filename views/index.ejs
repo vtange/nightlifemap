@@ -9,14 +9,15 @@
 	<link rel="stylesheet" href="style-0.css" />
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+	<script src="app.js"></script>
 </head>
-<body>
+<body data-ng-app="NightLifeMap" data-ng-controller="MainCtrl">
 <%- include partials/header.ejs %>
+  <form id="search" class="vert-centered-container">
+	<input type="text" class="vert-centered" placeholder="Where do you want to hang out tonight?" data-ng-model='location'>
+  </form>
   <div id="map"></div>
-  <div id="search" class="vert-centered-container">
-	<input type="text" class="vert-centered" placeholder="Where do you want to hang out tonight?">
-  </div>
-	
 	
   <script>
   //init map
