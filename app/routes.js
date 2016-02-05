@@ -24,8 +24,10 @@ module.exports = function(app) {
 	app.post("/", function(req, res) {
 		yelp.search({ term: 'bars', location: req.body.where })
 		.then(function (data) {
+			res.send(JSON.stringify(data));
 		})
 		.catch(function (err) {
+			throw err;
 		});
 	});
 	
