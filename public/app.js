@@ -6,18 +6,40 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', function($scope,$http,
 	$scope.json = {};
 	$scope.searchYelp = function(){
 		$http.post($window.location.href, $scope.json).success(function(data){
-			console.log(data);
+			//generate array from data
+			data.businesses.forEach(function(business,index){
+				angular.extend($scope, {									///change center
+					        center: {
+								lat: data.region.center.latitude,
+								lng: data.region.center.longitude,
+								zoom: 13
+							}
+				});
+				$scope.markers[index] = {									///append marker to markers
+							lat: business.location.coordinate.latitude,
+							lng: business.location.coordinate.longitude,
+							message: business.name,
+							focus: true,
+							draggable: false
+				};
+			})
+			//array.forEach(location)
+			//$scope.markers[index] = array[index]
+			
+			//in the end, replace markers with marker
+			
 		}).error(function(err){
 			console.log(err);
 		})
 	}
-	// make map
+	// initiate map
     angular.extend($scope, {
-        san_fran: {
+        center: {
             lat: 37.78,
             lng: -122.42,
             zoom: 13
         },
+		markers:{},		// initiate markers for future appending
         events: {},
         layers: {
             baselayers: {
@@ -29,7 +51,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', function($scope,$http,
             }
         },
         defaults: {
-            scrollWheelZoom: false
+            scrollWheelZoom: true
         }
 	});
 	
