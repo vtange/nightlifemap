@@ -22,12 +22,10 @@ module.exports = function(app) {
     });
 	
 	app.post("/", function(req, res) {
-		yelp.search({ term: 'food', location: 'Montreal' })
+		yelp.search({ term: 'bars', location: req.body.where })
 		.then(function (data) {
-		  console.log(data);
 		})
 		.catch(function (err) {
-		  console.error(err);
 		});
 	});
 	

@@ -2,10 +2,10 @@
     //start of function
   var app = angular.module('NightLifeMap', []);
 
-app.controller('MainCtrl', ['$scope', '$http', function($scope,$http){
-	$scope.json = {"one":$scope.location}
+app.controller('MainCtrl', ['$scope', '$http', '$window', function($scope,$http,$window){
+	$scope.json = {};
 	$scope.searchYelp = function(){
-		$http.post("/", $scope.json);
+		$http.post($window.location.href, $scope.json);
 	}
 	
 	
