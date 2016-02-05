@@ -2,7 +2,7 @@ console.log("	APP/ROUTES.JS")
 
 var Yelp = require('yelp');
 // load the auth variables
-var configAuth = require('./auth'); // use this one for testing
+var configAuth = require('../config/auth'); // use this one for testing
 
 var yelp = new Yelp({
   consumer_key: configAuth.yelpAuth.consumer_key,

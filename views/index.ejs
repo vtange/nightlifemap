@@ -10,8 +10,8 @@
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+	<script type="text/javascript" src="angular-leaflet-directive.min.js"></script>
 	<script src="app.js"></script>
-	<script src="map.js"></script>
 </head>
 	<body data-ng-app="NightLifeMap" data-ng-controller="MainCtrl">
 	
@@ -21,7 +21,7 @@
 		<input type="text" class="vert-centered" placeholder="Where do you want to hang out tonight?" data-ng-model='json.where'>
 	  </form>
 
-	  <div id="map"></div>
+	 <leaflet center="san_fran" markers="markers" event-broadcast="events" defaults="defaults" id='map'></leaflet>
 
 	</body>
 </html>
