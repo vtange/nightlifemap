@@ -11,27 +11,17 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 	<script src="app.js"></script>
+	<script src="map.js"></script>
 </head>
-<body data-ng-app="NightLifeMap" data-ng-controller="MainCtrl">
-<%- include partials/header.ejs %>
-  <form id="search" class="vert-centered-container" data-ng-submit="searchYelp()">
-	<input type="text" class="vert-centered" placeholder="Where do you want to hang out tonight?" data-ng-model='json.where'>
-  </form>
-  <div id="map"></div>
+	<body data-ng-app="NightLifeMap" data-ng-controller="MainCtrl">
+	
+	  <%- include partials/header.ejs %>
 
-  <script>
-  //init map
-  var map = L.map('map').setView([52.45,13.4], 9);
+	  <form id="search" class="vert-centered-container" data-ng-submit="searchYelp()">
+		<input type="text" class="vert-centered" placeholder="Where do you want to hang out tonight?" data-ng-model='json.where'>
+	  </form>
 
-  //layer 1
-  var toolserver = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png').addTo(map);
+	  <div id="map"></div>
 
-  //layer 2
-  var stamen = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {attribution: 'Add some attributes here!'}).addTo(map);
-
-  //layer control
-  var baseLayers = {"stamen": stamen, "toolserver-mapnik":toolserver};
-  L.control.layers(baseLayers).addTo(map);
-  </script>
-</body>
+	</body>
 </html>
