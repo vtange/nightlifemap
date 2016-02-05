@@ -1,12 +1,14 @@
 console.log("	APP/ROUTES.JS")
 
 var Yelp = require('yelp');
+// load the auth variables
+var configAuth = require('./auth'); // use this one for testing
 
 var yelp = new Yelp({
-  consumer_key: '1wyvc2xuxPErXRptWapu8w',
-  consumer_secret: 'HNHgD6M5zIIDLGzcX6SwN-8lCr0',
-  token: '5AznV1uRsk9Wx3YLMKFGcmbjx8Z8VpgW',
-  token_secret: 'sqCqxJcvf3wNemlOnx7HoYkWPxc',
+  consumer_key: configAuth.yelpAuth.consumer_key,
+  consumer_secret: configAuth.yelpAuth.consumer_secret,
+  token: configAuth.yelpAuth.token,
+  token_secret: configAuth.yelpAuth.token_secret,
 });
 
 // app/routes.js
