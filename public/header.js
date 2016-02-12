@@ -1,8 +1,8 @@
 (function() {
     //start of function
-  var app = angular.module('header', []);
+  var app = angular.module('NightLifeMap');
 
-app.controller('MainCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
+app.controller('LoginCtrl', ['$scope', '$http', '$window', function($scope, $http, $window){
 	$scope.info = {};
 	$scope.showLogin = false;
 	$scope.toggleLogin = function(){
