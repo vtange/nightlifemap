@@ -3,9 +3,16 @@
   var app = angular.module('NightLifeMap', ['leaflet-directive']);
 
 app.controller('MainCtrl', ['$scope', '$http', '$window', function($scope,$http,$window){
+	
+	var businessTemplatify = function(businessName){
+		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary'>I'm going</div></p></div>"
+	}
+	
+	
 	$scope.json = {};
 	$scope.searchYelp = function(){
 		$http.post($window.location.href, $scope.json).success(function(data){
+
 			//generate array from data
 			data.businesses.forEach(function(business,index){
 				angular.extend($scope, {									///change center
@@ -18,7 +25,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', function($scope,$http,
 				$scope.markers[index] = {									///append marker to markers
 							lat: business.location.coordinate.latitude,
 							lng: business.location.coordinate.longitude,
-							message: business.name,
+							message: businessTemplatify(business.name),
 							focus: true,
 							draggable: false
 				};
