@@ -5,9 +5,11 @@
 app.controller('MainCtrl', ['$scope', '$http', '$window', function($scope,$http,$window){
 	
 	var businessTemplatify = function(businessName){
-		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary'>I'm going</div></p></div>"
+		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='user' data-ng-click='addBar(user)'>I'm going</div></p></div>"
 	}
-	
+	$scope.addBar = function(user){
+		console.log(user);
+	}
 	
 	$scope.json = {};
 	$scope.searchYelp = function(){
@@ -26,6 +28,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', function($scope,$http,
 							lat: business.location.coordinate.latitude,
 							lng: business.location.coordinate.longitude,
 							message: businessTemplatify(business.name),
+							getMessageScope: function() {return $scope; },
 							focus: true,
 							draggable: false
 				};
