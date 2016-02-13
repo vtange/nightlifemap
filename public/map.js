@@ -5,7 +5,7 @@
 app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($scope,$http,$window, memory){
 	$scope.service1 = memory;
 	var businessTemplatify = function(businessName){
-		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='user' data-ng-click='addBar(user)'>I'm going</div></p></div>"
+		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar(user)'>I'm going</div></p></div>"
 	}
 	$scope.addBar = function(user){
 		console.log($scope.service1);

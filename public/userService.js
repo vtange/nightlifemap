@@ -5,8 +5,7 @@
 app.factory('memory', function(){
 
   var storage = {};
- storage.user = "hello";
-	
+
   return storage;
 });//end of service
 	

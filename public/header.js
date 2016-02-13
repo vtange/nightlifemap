@@ -3,7 +3,7 @@
   var app = angular.module('header', ['userService']);
 
 app.controller('LoginCtrl', ['$scope', '$http', '$window', 'memory', function($scope, $http, $window, memory){
-	
+	$scope.service1 = memory;
 	$scope.info = {};
 	$scope.showLogin = false;
 	$scope.toggleLogin = function(){
@@ -11,9 +11,9 @@ app.controller('LoginCtrl', ['$scope', '$http', '$window', 'memory', function($s
 	}
     $scope.login = function(){
 		$http.post($window.location.href+"login",$scope.info).success(function(data){
-			console.log(data);
 			//check if data has a user or not
 			if(data.id){
+				$scope.service1.user = data;
 				$scope.user = data;
 			}
 			else{
