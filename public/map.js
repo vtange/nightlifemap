@@ -1,14 +1,14 @@
 (function() {
     //start of function
-  var app = angular.module('NightLifeMap', ['leaflet-directive']);
+  var app = angular.module('NightLifeMap', ['leaflet-directive', 'header']);
 
-app.controller('MainCtrl', ['$scope', '$http', '$window', function($scope,$http,$window){
-	
+app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($scope,$http,$window, memory){
+	$scope.service1 = memory;
 	var businessTemplatify = function(businessName){
 		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='user' data-ng-click='addBar(user)'>I'm going</div></p></div>"
 	}
 	$scope.addBar = function(user){
-		console.log(user);
+		console.log($scope.service1);
 	}
 	
 	$scope.json = {};
