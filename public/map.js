@@ -40,11 +40,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 							draggable: false
 				};
 			})
-			//array.forEach(location)
-			//$scope.markers[index] = array[index]
-			
-			//in the end, replace markers with marker
-			
+
 		}).error(function(err){
 			console.log(err);
 		})
