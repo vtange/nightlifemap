@@ -4,11 +4,17 @@
 
 app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($scope,$http,$window, memory){
 	$scope.service1 = memory;
-	var businessTemplatify = function(businessName){
-		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar(service1.user)'>I'm going</div></p></div>"
+	
+	var businessTemplatify = function(businessName,bar_id){
+		var id = bar_id;
+		return "<div style='min-width:200px;'><h3>"+businessName+id+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar("+id+",service1.user)'>I'm going</div></p></div>"
 	}
-	$scope.addBar = function(user){
-		$http.post($window.location.href+'addbar', user).success(function(data){
+	
+	$scope.addBar = function(bar, user){
+		console.log(bar);
+		console.log(user);
+		var info = {bar_id:bar,user:user};
+		$http.post($window.location.href+'addbar', info).success(function(data){
 			console.log("added you to the bar");
 		})
 	}
@@ -16,9 +22,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.json = {};
 	$scope.searchYelp = function(){
 		$http.post($window.location.href+'search', $scope.json).success(function(data){
-
 			//generate array from data
-			data.businesses.forEach(function(business,index){
 				angular.extend($scope, {									///change center
 					        center: {
 								lat: data.region.center.latitude,
@@ -26,10 +30,11 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 								zoom: 13
 							}
 				});
-				$scope.markers[index] = {									///append marker to markers
+			data.businesses.forEach(function(business,index){
+				$scope.markers[index] = {									///append each marker to markers
 							lat: business.location.coordinate.latitude,
 							lng: business.location.coordinate.longitude,
-							message: businessTemplatify(business.name),
+							message: businessTemplatify(business.name, business.id),
 							getMessageScope: function() {return $scope; },
 							focus: true,
 							draggable: false
