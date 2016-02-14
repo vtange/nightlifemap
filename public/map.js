@@ -5,14 +5,11 @@
 app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($scope,$http,$window, memory){
 	$scope.service1 = memory;
 	
-	var businessTemplatify = function(businessName,bar_id){
-		var id = bar_id;
-		return "<div style='min-width:200px;'><h3>"+businessName+id+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar("+id+",service1.user)'>I'm going</div></p></div>"
+	var businessTemplatify = function(businessName,index){
+		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar(searchResults["+index+"],service1.user)'>I'm going</div></p></div>"
 	}
 	
 	$scope.addBar = function(bar, user){
-		console.log(bar);
-		console.log(user);
 		var info = {bar_id:bar,user:user};
 		$http.post($window.location.href+'addbar', info).success(function(data){
 			console.log("added you to the bar");
@@ -20,6 +17,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	}
 	
 	$scope.json = {};
+	$scope.searchResults = {};
 	$scope.searchYelp = function(){
 		$http.post($window.location.href+'search', $scope.json).success(function(data){
 			//generate array from data
@@ -31,10 +29,11 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 							}
 				});
 			data.businesses.forEach(function(business,index){
+				$scope.searchResults[index]= business.id
 				$scope.markers[index] = {									///append each marker to markers
 							lat: business.location.coordinate.latitude,
 							lng: business.location.coordinate.longitude,
-							message: businessTemplatify(business.name, business.id),
+							message: businessTemplatify(business.name, index),
 							getMessageScope: function() {return $scope; },
 							focus: true,
 							draggable: false
