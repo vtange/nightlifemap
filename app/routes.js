@@ -1,5 +1,6 @@
 console.log("	APP/ROUTES.JS")
 
+var Bar = require('./models/bar');
 var Yelp = require('yelp');
 // load the auth variables
 var configAuth = require('../config/auth'); // use this one for testing
@@ -40,8 +41,36 @@ module.exports = function(app) {
     //  ADD USER TO BAR========
     // =====================================
 	app.post("/addbar", function(req, res) {
-		console.log(req.body)
-		res.send(200);
+		Bar.findOne({id:req.body.bar_id}, function(err, bar){
+			if(!bar){
+				//create a new bar if no bar yet
+				    var newBar            = new Bar();
+					newBar.id = req.body.bar_id;
+				// and then add the user to that bar
+					newBar.users.push(req.body.user.id);
+				//save
+				    newBar.save(function(err) {
+                        if (err)
+                            throw err;
+						console.log("saved new bar");
+                    });
+			}
+			else{
+				//add the user to that bar
+				bar.users.push(req.body.user.id);
+				//save
+				    bar.save(function(err) {
+                        if (err)
+                            throw err;
+						console.log("updated bar");
+                    });
+			}
+			if(!err)
+				res.send(200);
+			else{
+				res.send(500);
+			}
+		})
 	});
 	
 };
