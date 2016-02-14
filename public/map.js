@@ -5,15 +5,17 @@
 app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($scope,$http,$window, memory){
 	$scope.service1 = memory;
 	var businessTemplatify = function(businessName){
-		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar(user)'>I'm going</div></p></div>"
+		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar(service1.user)'>I'm going</div></p></div>"
 	}
 	$scope.addBar = function(user){
-		console.log($scope.service1);
+		$http.post($window.location.href+'addbar', user).success(function(data){
+			console.log("added you to the bar");
+		})
 	}
 	
 	$scope.json = {};
 	$scope.searchYelp = function(){
-		$http.post($window.location.href, $scope.json).success(function(data){
+		$http.post($window.location.href+'search', $scope.json).success(function(data){
 
 			//generate array from data
 			data.businesses.forEach(function(business,index){

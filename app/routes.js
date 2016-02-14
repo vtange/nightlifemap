@@ -23,7 +23,10 @@ module.exports = function(app) {
         }); // load the index.ejs file
     });
 	
-	app.post("/", function(req, res) {
+    // =====================================
+    //  SEARCH FOR BARS ========
+    // =====================================
+	app.post("/search", function(req, res) {
 		yelp.search({ term: 'bars', location: req.body.where })
 		.then(function (data) {
 			res.send(JSON.stringify(data));
@@ -31,6 +34,14 @@ module.exports = function(app) {
 		.catch(function (err) {
 			throw err;
 		});
+	});
+	
+    // =====================================
+    //  ADD USER TO BAR========
+    // =====================================
+	app.post("/addbar", function(req, res) {
+		console.log(req.body)
+		res.send(200);
 	});
 	
 };
