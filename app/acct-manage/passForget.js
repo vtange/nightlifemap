@@ -17,7 +17,7 @@ module.exports = function(app) {
     app.get('/forgot', function(req, res) {
 
         // render the page and pass in any flash data if it exists
-        res.render('acct-manage/forgot.ejs', { user : req.user, message: req.flash('info') }); 
+        res.render('acct-manage/forgot.ejs', { user : req.user, message: req.flash('info'), packagedUser : JSON.stringify(req.user) // for angular to know }); 
     });
 	
     // =====================================
@@ -82,7 +82,8 @@ module.exports = function(app) {
 		res.render('acct-manage/reset.ejs', {
 		  token: req.params.token,
 		  message: req.flash('info'),
-		  user: req.user
+		  user: req.user,
+		  packagedUser : JSON.stringify(req.user) // for angular to know
 		});
 	  });
 	});
