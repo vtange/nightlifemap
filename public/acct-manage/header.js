@@ -26,8 +26,10 @@ app.controller('LoginCtrl', ['$scope', '$http', '$window', 'memory', function($s
 		
 		
 	}
-	$scope.logout = function(){
-		
+	$scope.autologUser = function(user){
+		var info = {id:user._id, username: user.local.username, email: user.local.email};
+		$scope.service1.user = info;
+		$scope.user = info;
 	}
 }]);//end of controller
   //end of function
