@@ -6,7 +6,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.service1 = memory;
 	
 	var businessTemplatify = function(businessName,index){
-		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><span><strong>Who's going:<strong></span></p><p><div class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar(searchResults["+index+"],service1.user)'>I'm going</div></p></div>"
+		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p><p><div id='addBar-btn' class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar(searchResults["+index+"],service1.user)'>I'm going</div></p></div>"
 	}
 	
 	$scope.addBar = function(bar, user){
@@ -14,8 +14,24 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 		$http.post($window.location.href+'addbar', info).success(function(data){
 			console.log("added you to the bar");
 		})
+		///replace addbar-btn with removebar-btn
+		var removebarBtn = "<div id='addBar-btn' class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar(searchResults["+index+"],service1.user)'>I'm going</div></p></div>";
+		document.getElementById('addBar-btn')
+		
+		//add user avatar to list
+		document.getElementById('barUsersList')
+		
 	}
-	
+	$scope.removeBar = function(bar, user){
+		var info = {bar_id:bar,user:user};
+		//replace removebar-btn with addbar-btn
+		var addbarBtn = "<div id='addBar-btn' class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar(searchResults["+index+"],service1.user)'>I'm going</div></p></div>";
+		document.getElementById('addBar-btn')
+		
+		//add user avatar to list
+		document.getElementById('barUsersList')
+		
+	}	
 	$scope.json = {};
 	$scope.searchResults = {};
 	$scope.searchYelp = function(){
