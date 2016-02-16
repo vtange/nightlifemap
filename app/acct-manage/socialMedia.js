@@ -51,7 +51,9 @@ module.exports = function(app, passport) {
     // locally --------------------------------
         app.get('/connect/local', function(req, res) {
             res.render('acct-manage/connect-local.ejs', { user : req.user, message: req.flash('loginMessage'), packagedUser : JSON.stringify(req.user) // for angular to know });
-        });
+        	});
+		});
+	
         app.post('/connect/local', passport.authenticate('local-signup', {
             successRedirect : '/profile', // redirect to the secure profile section
             failureRedirect : '/connect/local', // redirect back to the signup page if there is an error

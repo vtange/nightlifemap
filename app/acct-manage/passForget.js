@@ -18,7 +18,8 @@ module.exports = function(app) {
 
         // render the page and pass in any flash data if it exists
         res.render('acct-manage/forgot.ejs', { user : req.user, message: req.flash('info'), packagedUser : JSON.stringify(req.user) // for angular to know }); 
-    });
+    	});
+	});
 	
     // =====================================
     // FORGOT PASSWORD =====================

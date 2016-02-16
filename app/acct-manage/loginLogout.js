@@ -26,8 +26,8 @@ module.exports = function(app, passport) {
 
         // render the page and pass in any flash data if it exists
         res.render('acct-manage/signup.ejs', { user : req.user, message: req.flash('signupMessage'), packagedUser : JSON.stringify(req.user) // for angular to know });
-    });
-
+    	});
+	});
     // process the signup form
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect : '/', // redirect to home page with logged in status
