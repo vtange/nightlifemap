@@ -6,32 +6,32 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.service1 = memory;
 	
 	var businessTemplatify = function(businessName,index){
-		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p><p><div id='addBar-btn' class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar("+index+",service1.user)'>I'm going</div></p></div>"
+		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p><p><div id='addBar-btn' class='btn btn-primary' data-ng-if='!(hasBar("+index+",service1.user))' data-ng-show='service1.user' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+",service1.user)' data-ng-show='service1.user' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>"
 	}
 	
+	$scope.hasBar = function(index, user){
+		var bar = $scope.searchResults[index];
+		return user.bars.indexOf(bar) !== -1;	//return true if not no bar
+	}
+
 	$scope.addBar = function(index, user){
 		var bar = $scope.searchResults[index];
 		var info = {bar_id:bar,user:user};
 		$http.post($window.location.href+'addbar', info).success(function(data){
 			console.log("added you to the bar");
 		})
-		///replace addbar-btn with removebar-btn
-		var removebarBtn = "<div id='addBar-btn' class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar("+index+",service1.user)'>I'm going</div></p></div>";
-		document.getElementById('addBar-btn')
 		
 		//add user avatar to list
-		document.getElementById('barUsersList')
+		document.getElementById('barUsersList');
 		
 	}
 	$scope.removeBar = function(index, user){
 		var bar = $scope.searchResults[index];
 		var info = {bar_id:bar,user:user};
-		//replace removebar-btn with addbar-btn
-		var addbarBtn = "<div id='addBar-btn' class='btn btn-primary' data-ng-show='service1.user' data-ng-click='addBar("+index+",service1.user)'>I'm going</div></p></div>";
-		document.getElementById('addBar-btn')
-		
+		console.log("removed you from the bar");
+
 		//add user avatar to list
-		document.getElementById('barUsersList')
+		document.getElementById('barUsersList');
 		
 	}	
 	$scope.json = {};
