@@ -27,7 +27,7 @@
 								</div>
 								<a href="/profile" class="btn btn-default" data-ng-if="user"><span class="fa fa-user"></span> {{user.username}}</a>
 								<% } else {%>
-								<a href="/profile" class="btn btn-default"><span class="fa fa-user" data-ng-init="package = <%= packagedUser %>;autologUser(package)"></span> <%= user.local.username %></a>
+								<a href="/profile" class="btn btn-default"><span data-ng-init="package = <%= packagedUser %>;autologUser(package)"></span><img style="max-height:30px;" src="<%= user.local.avatarURL %>"/> <%= user.local.username %></a>
 								<% } %>
 							</div>
 					    </div>
