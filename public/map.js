@@ -73,7 +73,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
             baselayers: {
                 osm: {
                     name: 'OpenStreetMap',
-                    url: 'https://{s}.tiles.mapbox.com/v3/examples.map-i875mjb7/{z}/{x}/{y}.png',
+                    url: 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png',
                     type: 'xyz'
                 }
             }
