@@ -39,9 +39,18 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.removeBar = function(index, user){
 		let bar = $scope.searchResults[index];
 		let info = {bar_id:bar,user:user};
+		function findBarinUser(bar, user){
+					var index = -1;
+					for (var i=0;i<user.bars.length;i++){
+						//find a bar within user.bars that has the id of the bar we want to remove
+						if(bar === user.bars[i].id){
+							return i;
+						}
+					}
+					return index;
+				}
 		$http.post($window.location.href+'rembar', info).success(function(data){
-			console.log(data);
-			//user.bars.splice(user.bars.indexOf(data),1)
+			user.bars.splice(findBarinUser(bar,user),1)
 			console.log("removed you from the bar");
 		})
 
