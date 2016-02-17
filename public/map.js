@@ -10,10 +10,10 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	}
 	
 	$scope.hasBar = function(index, user){
-		var bar = $scope.searchResults[index];
+		let bar = $scope.searchResults[index];
 		function hasBar(){
 			for(let i=0;i<user.bars.length;i++){
-				for(var prop in user.bars[i]){
+				for(let prop in user.bars[i]){
 					if(user.bars[i][prop]===bar){
 						return true;
 					}
@@ -25,9 +25,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	}
 
 	$scope.addBar = function(index, user){
-		var bar = $scope.searchResults[index];
-		var info = {bar_id:bar,user:user};
-		console.log(user.bars);
+		let bar = $scope.searchResults[index];
+		let info = {bar_id:bar,user:user};
 		$http.post($window.location.href+'addbar', info).success(function(data){
 			user.bars.push(data)
 			console.log("added you to the bar");
@@ -38,9 +37,13 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 		
 	}
 	$scope.removeBar = function(index, user){
-		var bar = $scope.searchResults[index];
-		var info = {bar_id:bar,user:user};
-		console.log("removed you from the bar");
+		let bar = $scope.searchResults[index];
+		let info = {bar_id:bar,user:user};
+		$http.post($window.location.href+'rembar', info).success(function(data){
+			console.log(data);
+			//user.bars.splice(user.bars.indexOf(data),1)
+			console.log("removed you from the bar");
+		})
 
 		//add user avatar to list
 		document.getElementById('barUsersList');

@@ -10,7 +10,7 @@ var yelp = new Yelp({
   consumer_key: configAuth.yelpAuth.consumer_key,
   consumer_secret: configAuth.yelpAuth.consumer_secret,
   token: configAuth.yelpAuth.token,
-  token_secret: configAuth.yelpAuth.token_secret,
+  token_secret: configAuth.yelpAuth.token_secret
 });
 
 // app/routes.js
@@ -45,7 +45,7 @@ module.exports = function(app) {
 	app.post("/addbar", function(req, res) {
 		User.findOne({_id:req.body.user.id},function(err, user){
 			if (err){
-				throw err
+				throw err;
 			}
 			Bar.findOne({id:req.body.bar_id}, function(err, bar){
 				if(!bar){
@@ -92,4 +92,48 @@ module.exports = function(app) {
 			})
 		})
 	});
+	// =====================================
+    //  REMOVE USER FROM BAR========
+    // =====================================
+	app.post("/rembar", function(req, res) {
+		User.findOne({_id:req.body.user.id},function(err, user){
+			if (err){
+				throw err;
+			}
+			Bar.findOne({id:req.body.bar_id}, function(err, bar){
+				function findBarinUser(bar, user){
+					var index = -1;
+					for (var i=0;i<user.bars.length;i++){
+						//find a bar within user.bars that has the id of the bar we found in mongoDB
+						if(bar.id === user.bars[i].id){
+							return i;
+						}
+					}
+					return index;
+				}
+
+					//remove the user to that bar
+					bar.users.splice(bar.users.indexOf(user._id),1);
+					user.bars.splice(findBarinUser(bar,user),1);
+
+					//save
+						user.save(function(err) {
+							if (err)
+								throw err;
+							console.log("user has less 1 bar");
+						});	
+					//save
+						bar.save(function(err) {
+							if (err)
+								throw err;
+							console.log("updated bar");
+						});
+					res.send(JSON.stringify({_id:bar._id,id:bar.id}));
+			})
+		})
+	});
+	
+	
+	
+	
 };
