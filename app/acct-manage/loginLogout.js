@@ -14,7 +14,7 @@ module.exports = function(app, passport) {
     app.post('/login', passport.authenticate('local-login', {failureRedirect: '/loginfailure', failureFlash : true}), function(req, res) {
 		var user = req.user;
 		if (user){
-			var userInfo = {id:user._id,username:user.local.username,email:user.local.email,avatar:user.local.avatarURL};
+			var userInfo = {id:user._id,username:user.local.username,email:user.local.email,avatar:user.local.avatarURL,bars:user.bars};
 			res.send(JSON.stringify(userInfo));
 		}
 	});

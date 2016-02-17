@@ -11,13 +11,25 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	
 	$scope.hasBar = function(index, user){
 		var bar = $scope.searchResults[index];
-		return user.bars.indexOf(bar) !== -1;	//return true if not no bar
+		function hasBar(){
+			for(let i=0;i<user.bars.length;i++){
+				for(var prop in user.bars[i]){
+					if(user.bars[i][prop]===bar){
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		return hasBar();	//return true if not no bar
 	}
 
 	$scope.addBar = function(index, user){
 		var bar = $scope.searchResults[index];
 		var info = {bar_id:bar,user:user};
+		console.log(user.bars);
 		$http.post($window.location.href+'addbar', info).success(function(data){
+			user.bars.push(data)
 			console.log("added you to the bar");
 		})
 		

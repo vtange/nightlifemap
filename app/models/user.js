@@ -6,7 +6,7 @@ var gravatar = require('gravatar');
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
-
+	bars			 : [{ id: String }],
     local            : {
         username     : String,
         email        : String,
