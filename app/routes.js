@@ -132,7 +132,27 @@ module.exports = function(app) {
 			})
 		})
 	});
-	
+	// =====================================
+    //  FIND A BAR========
+    // =====================================
+	app.post("/findbar", function(req, res) {
+			Bar.findOne({id:req.body.bar_id}, function(err, bar){
+				if(bar){
+					console.log(bar);
+					res.send(JSON.stringify(bar.users));
+				}
+				else{
+						//create a new bar if no bar yet
+						var newBar            = new Bar();
+						newBar.id = req.body.bar_id;
+						newBar.save(function(err) {
+							if (err)
+								throw err;
+							res.send(JSON.stringify(newBar.users));
+						});
+				}
+			})
+	});
 	
 	
 	

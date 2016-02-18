@@ -6,7 +6,15 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.service1 = memory;
 	
 	var businessTemplatify = function(businessName,index){
-			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p><p data-ng-if='service1.user'><div id='addBar-btn' class='btn btn-primary' data-ng-if='hasBar("+index+")===false' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+")===true' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>"
+			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong><span data-ng-repeat='user in searchResultsUsers["+index+"]'>Hello</span></p><p data-ng-if='service1.user'><div id='addBar-btn' class='btn btn-primary' data-ng-if='hasBar("+index+")===false' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+")===true' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>"
+	}
+	
+	$scope.getBarUsers = function(index){	//for getting bar's user list
+		let bar = $scope.searchResults[index];
+		let info = {bar_id:bar};
+		$http.post($window.location.href+'findbar',info).success(function(data){
+			return data;
+		})
 	}
 	
 	$scope.hasBar = function(index){	// determines if it's a add or remove bar button
@@ -64,6 +72,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	}	
 	$scope.json = {};
 	$scope.searchResults = {};
+	$scope.searchResultsUsers = {};
 	$scope.searchYelp = function(){
 		$http.post($window.location.href+'search', $scope.json).success(function(data){
 			//generate array from data
@@ -75,7 +84,9 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 							}
 				});
 			data.businesses.forEach(function(business,index){
-				$scope.searchResults[index]= business.id
+				$scope.searchResults[index]= business.id;
+				$scope.searchResultsUsers[index]=$scope.getBarUsers(index);
+				console.log($scope.getBarUsers(index));						// undefined because of async nature.
 				$scope.markers[index] = {									///append each marker to markers
 							lat: business.location.coordinate.latitude,
 							lng: business.location.coordinate.longitude,
