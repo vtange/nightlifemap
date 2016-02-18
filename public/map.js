@@ -6,8 +6,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.service1 = memory;
 	
 	var businessTemplatify = function(businessName,index){
-			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong><span data-ng-repeat='user in searchResultsUsers["+index+"]'>Hello</span></p><p data-ng-if='service1.user'><div id='addBar-btn' class='btn btn-primary' data-ng-if='hasBar("+index+")===false' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+")===true' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>"
-	}
+			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong><span data-ng-repeat='user in searchResultsUsers["+index+"]'>Hello</span></p><p data-ng-if='service1.user'><div id='addBar-btn' class='btn btn-primary' data-ng-if='hasBar("+index+")===false' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+")===true' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>";
+	};
 	
 	$scope.getBarUsers = function(index){	//for getting bar's user list
 		let bar = $scope.searchResults[index];
@@ -32,7 +32,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 			return hasBar();	//return true if not no bar
 		}
 		return undefined;	//returning false will show add bar button
-	}
+	};
 
 	$scope.addBar = function(index, user){
 		let bar = $scope.searchResults[index];
@@ -40,12 +40,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 		$http.post($window.location.href+'addbar', info).success(function(data){
 			user.bars.push(data)
 			console.log("added you to the bar");
-		})
-		
-		//add user avatar to list
-		document.getElementById('barUsersList');
-		
-	}
+		});
+	};
 	$scope.removeBar = function(index, user){
 		let bar = $scope.searchResults[index];
 		let info = {bar_id:bar,user:user};
@@ -62,12 +58,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 		$http.post($window.location.href+'rembar', info).success(function(data){
 			user.bars.splice(findBarinUser(bar,user),1)
 			console.log("removed you from the bar");
-		})
-
-		//add user avatar to list
-		document.getElementById('barUsersList');
-		
-	}	
+		});
+	};
 	$scope.json = {};
 	$scope.searchResults = {};
 	$scope.searchResultsUsers = {};
@@ -108,12 +100,12 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 							focus: true,
 							draggable: false
 				};
-			})
+			});
 
 		}).error(function(err){
 			console.log(err);
-		})
-	}
+		});
+	};
 	// initiate map
     angular.extend($scope, {
         center: {
