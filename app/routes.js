@@ -152,7 +152,19 @@ module.exports = function(app) {
 				}
 			})
 	});
-	
+	// =====================================
+    //  COLLECT AVATARS OF BAR'S USERS ========
+    // =====================================
+	app.post("/avatarColle", function(req, res) {
+			User.findOne({_id:req.body.user_id}, function(err, user){
+				if(user){
+					res.send(user.local.avatarURL);
+				}
+				else{
+					res.send("");
+				}
+			})
+	});
 	
 	
 };
