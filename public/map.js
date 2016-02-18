@@ -6,7 +6,12 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.service1 = memory;
 	
 	var businessTemplatify = function(businessName,index){
-		return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p><p><div id='addBar-btn' class='btn btn-primary' data-ng-if='!(hasBar("+index+",service1.user))' data-ng-show='service1.user' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+",service1.user)' data-ng-show='service1.user' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>"
+		if ($scope.service1.user){
+			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p><p><div id='addBar-btn' class='btn btn-primary' data-ng-if='!(hasBar("+index+",service1.user))' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+",service1.user)' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>"
+		}
+		else{
+			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p></div>"
+		}
 	}
 	
 	$scope.hasBar = function(index, user){
@@ -40,8 +45,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 		let bar = $scope.searchResults[index];
 		let info = {bar_id:bar,user:user};
 		function findBarinUser(bar, user){
-					var index = -1;
-					for (var i=0;i<user.bars.length;i++){
+					let index = -1;
+					for (let i=0;i<user.bars.length;i++){
 						//find a bar within user.bars that has the id of the bar we want to remove
 						if(bar === user.bars[i].id){
 							return i;
