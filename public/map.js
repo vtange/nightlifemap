@@ -73,16 +73,23 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.searchResultsUsers = {};
 	$scope.searchYelp = function(){
 		$http.post($window.location.href+'search', $scope.json).success(function(data){
-			//generate array from data
-				angular.extend($scope, {									///change center
+			
+			///change center of map
+				angular.extend($scope, {									
 					        center: {
 								lat: data.region.center.latitude,
 								lng: data.region.center.longitude,
 								zoom: 13
 							}
 				});
+			
+			//for all businesses
 			data.businesses.forEach(function(business,index){
+				
+				//add business id to an {}, used to identify businesses for future interaction
 				$scope.searchResults[index]= business.id;
+				
+				//get user data per business and put it into a {}
 				var promise1 = $scope.getBarUsers(index);
 				promise1.then(function(response) {
 				//	console.log(response.data);  ==> Array [] for empty bars, Array [ blah , blah ] for populated bars
@@ -91,6 +98,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 				.catch(function(err) {
 				  throw err;
 				});
+				
+				//marker each business
 				$scope.markers[index] = {									///append each marker to markers
 							lat: business.location.coordinate.latitude,
 							lng: business.location.coordinate.longitude,
@@ -118,7 +127,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
             baselayers: {
                 osm: {
                     name: 'OpenStreetMap',
-                    url: 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png',
+                    url: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
                     type: 'xyz'
                 }
             }
