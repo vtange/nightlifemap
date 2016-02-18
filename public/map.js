@@ -63,7 +63,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	};
 	$scope.json = {};
 	$scope.searchResults = {};
-	$scope.searchResultsUsers = {};
+	$scope.searchResultsUsers = [];
 	$scope.searchYelp = function(){
 		$http.post($window.location.href+'search', $scope.json).success(function(data){
 			
@@ -86,14 +86,16 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 				var promise1 = $scope.getBarUsers(index);
 				promise1.then(function(response) {
 				//	console.log(response.data);  ==> Array [] for empty bars, Array [ blah , blah ] for populated bars
-				  $scope.searchResultsUsers[index] = response.data.map(function(userID){
+					console.log(response.data);
+				  response.data.forEach(function(userID){
 				  	//for each array of [ user._ids ], convert to [ user.avatarURLs ]
-					  console.log(userID);
 					let info = {user_id:userID};
 				  	var promise2 = $http.post($window.location.href+'avatarColle',info);
-				  	return promise2.then((response)=>{
-						console.log(response.data);
-						return response.data;
+				  	promise2.then(function(response){
+						if($scope.searchResultsUsers[index]===undefined){
+							$scope.searchResultsUsers[index] = [];
+						}
+						$scope.searchResultsUsers[index].push(response.data);
 					})
 					.catch(function(err) {
 						throw err;
