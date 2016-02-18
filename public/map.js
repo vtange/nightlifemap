@@ -6,15 +6,11 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.service1 = memory;
 	
 	var businessTemplatify = function(businessName,index){
-		if ($scope.service1.user){
-			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p><p><div id='addBar-btn' class='btn btn-primary' data-ng-if='!(hasBar("+index+",service1.user))' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+",service1.user)' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>"
-		}
-		else{
-			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p></div>"
-		}
+			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong></p><p data-ng-if='service1.user'><div id='addBar-btn' class='btn btn-primary' data-ng-if='!(hasBar("+index+"))' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+")' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>"
 	}
 	
-	$scope.hasBar = function(index, user){
+	$scope.hasBar = function(index){	// determines if it's a add or remove bar button
+		var user = $scope.service1.user;
 		let bar = $scope.searchResults[index];
 		function hasBar(){
 			for(let i=0;i<user.bars.length;i++){
