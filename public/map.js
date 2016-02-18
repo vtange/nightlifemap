@@ -12,10 +12,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.getBarUsers = function(index){	//for getting bar's user list
 		let bar = $scope.searchResults[index];
 		let info = {bar_id:bar};
-		$http.post($window.location.href+'findbar',info).success(function(data){
-			return data;
-		})
-	}
+		return $http.post($window.location.href+'findbar',info);	//return http request (a promise)
+		};
 	
 	$scope.hasBar = function(index){	// determines if it's a add or remove bar button
 		var user = $scope.service1.user;
@@ -85,8 +83,14 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 				});
 			data.businesses.forEach(function(business,index){
 				$scope.searchResults[index]= business.id;
-				$scope.searchResultsUsers[index]=$scope.getBarUsers(index);
-				console.log($scope.getBarUsers(index));						// undefined because of async nature.
+				var promise1 = $scope.getBarUsers(index);
+				promise1.then(function(response) {
+				//	console.log(response.data);  ==> Array [] for empty bars, Array [ blah , blah ] for populated bars
+				  $scope.searchResultsUsers[index] = response.data;
+				})
+				.catch(function(err) {
+				  throw err;
+				});
 				$scope.markers[index] = {									///append each marker to markers
 							lat: business.location.coordinate.latitude,
 							lng: business.location.coordinate.longitude,

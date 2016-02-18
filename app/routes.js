@@ -138,7 +138,6 @@ module.exports = function(app) {
 	app.post("/findbar", function(req, res) {
 			Bar.findOne({id:req.body.bar_id}, function(err, bar){
 				if(bar){
-					console.log(bar);
 					res.send(JSON.stringify(bar.users));
 				}
 				else{
