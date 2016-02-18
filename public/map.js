@@ -65,6 +65,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	$scope.searchResults = {};
 	$scope.searchResultsUsers = [];
 	$scope.searchYelp = function(){
+		$scope.searchResults = {};			//reset old results
+		$scope.searchResultsUsers = [];		//reset old results
 		$http.post($window.location.href+'search', $scope.json).success(function(data){
 			
 			///change center of map
