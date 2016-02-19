@@ -1,12 +1,12 @@
 (function() {
     //start of function
-  var app = angular.module('NightLifeMap', ['leaflet-directive', 'header']);
+  var app = angular.module('NightLifeMap', ['leaflet-directive', 'header', 'errSrc']);
 
 app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($scope,$http,$window, memory){
 	$scope.service1 = memory;
 	
 	var businessTemplatify = function(businessName,index){
-			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong><span data-ng-repeat='userAvatar in searchResultsUsers["+index+"]'><img data-ng-src='{{userAvatar}}'/></span></p><p data-ng-if='service1.user'><div id='addBar-btn' class='btn btn-primary' data-ng-if='hasBar("+index+")===false' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+")===true' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>";
+			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong><span data-ng-repeat='userAvatar in searchResultsUsers["+index+"]'><img style='max-height:30px;' data-ng-src='{{userAvatar}}' err-src='../images/novatar.png' /></span></p><p data-ng-if='service1.user'><div id='addBar-btn' class='btn btn-primary' data-ng-if='hasBar("+index+")===false' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+")===true' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>";
 	};
 	
 	$scope.getBarUsers = function(index){	//for getting bar's user list
