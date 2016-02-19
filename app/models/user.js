@@ -47,7 +47,7 @@ userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
 };
 
-// generating a hash
+// generate gravatar link
 userSchema.methods.generateGravatar = function(email) {
     return gravatar.url(email, {s: '200', r: 'pg', d: '404'});
 };
