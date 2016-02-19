@@ -48,7 +48,8 @@ h1{
 #map{
 	position: relative;
 	width: 100vw;
-	height: 80vh
+	height: 80vh;
+	box-shadow: 3px 3px 30px #040407;
 }
 #search{
 	position: relative;
