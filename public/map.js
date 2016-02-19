@@ -135,13 +135,17 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
         layers: {
             baselayers: {
                 osm: {
-                    name: 'OpenStreetMap',
+                    name: 'CartoDB',
                     url: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
                     type: 'xyz'
                 }
             }
         },
         defaults: {
+			tileLayer: "http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+			tileLayerOptions: {
+        		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+      		},
             scrollWheelZoom: true
         }
 	});
