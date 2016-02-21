@@ -3,6 +3,9 @@
   var app = angular.module('header', ['userService']);
 
 app.controller('LoginCtrl', ['$scope', '$http', '$window', 'memory', function($scope, $http, $window, memory){
+	function getRootUrl() {
+		return $window.location.origin?$window.location.origin+'/':$window.location.protocol+'/'+$window.location.host+'/';
+	}
 	$scope.service1 = memory;
 	$scope.info = {};
 	$scope.showLogin = false;
@@ -10,7 +13,7 @@ app.controller('LoginCtrl', ['$scope', '$http', '$window', 'memory', function($s
 		$scope.showLogin = !!($scope.showLogin)?false:true;
 	}
     $scope.login = function(){
-		$http.post($window.location.href+"login",$scope.info).success(function(data){
+		$http.post(getRootUrl()+"login",$scope.info).success(function(data){
 			//check if data has a user or not
 			if(data.id){
 				$scope.service1.user = data;
