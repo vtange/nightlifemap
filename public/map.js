@@ -1,4 +1,5 @@
 (function() {
+"use strict";
     //start of function
   var app = angular.module('NightLifeMap', ['leaflet-directive', 'header', 'errSrc']);
 
@@ -17,18 +18,18 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 	
 	$scope.hasBar = function(index){	// determines if it's a add or remove bar button
 		var user = $scope.service1.user;
-		if(user){
-			let bar = $scope.searchResults[index];
-			function hasBar(){
-				for(let i=0;i<user.bars.length;i++){
-					for(let prop in user.bars[i]){
-						if(user.bars[i][prop]===bar){
-							return true;
-						}
+		function hasBar(){
+			for(let i=0;i<user.bars.length;i++){
+				for(let prop in user.bars[i]){
+					if(user.bars[i][prop]===bar){
+						return true;
 					}
 				}
-				return false;
 			}
+			return false;
+		};
+		if(user){
+			let bar = $scope.searchResults[index];
 			return hasBar();	//return true if not no bar
 		}
 		return undefined;	//returning false will show add bar button
