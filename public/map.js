@@ -4,19 +4,24 @@
   var app = angular.module('NightLifeMap', ['leaflet-directive', 'header', 'errSrc']);
 
 app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($scope,$http,$window, memory){
+	
+	//stores user between header and the map
 	$scope.service1 = memory;
 	
+	//shown per business popup on map
 	var businessTemplatify = function(businessName,index){
 			return "<div style='min-width:200px;'><h3>"+businessName+"</h3><p><strong><span id='barUsersList'>Who's going:</span><strong><span data-ng-repeat='userAvatar in searchResultsUsers["+index+"]'><img style='max-height:30px;' data-ng-src='{{userAvatar}}' err-src='../images/novatar.png' /></span></p><p data-ng-if='service1.user'><div id='addBar-btn' class='btn btn-primary' data-ng-if='hasBar("+index+")===false' data-ng-click='addBar("+index+",service1.user)'>I'm going</div><div id='remBar-btn' class='btn btn-danger' data-ng-if='hasBar("+index+")===true' data-ng-click='removeBar("+index+",service1.user)'>I'm outta here</div></p></div>";
 	};
 	
-	$scope.getBarUsers = function(index){	//for getting bar's user list
+	// for getting bar's user list
+	$scope.getBarUsers = function(index){	
 		let bar = $scope.searchResults[index];
 		let info = {bar_id:bar};
 		return $http.post($window.location.href+'findbar',info);	//return http request (a promise)
-		};
+	};
 	
-	$scope.hasBar = function(index){	// determines if it's a add or remove bar button
+	// checks if user is in this bar already, show grn or red button
+	$scope.hasBar = function(index){
 		let user = $scope.service1.user;
 		let bar = $scope.searchResults[index];
 		function hasBar(){
@@ -30,20 +35,25 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 			return false;
 		};
 		if(user){
-			return hasBar();	//return true if not no bar
+			return hasBar();	//return true there is a logged in user and he/she is in bar
 		}
 		return undefined;	//returning false will show add bar button
 	};
 
+	// add bar to user's bars list, add user to bars list
+	// assemble bar and user info in an obj and do a POST request
 	$scope.addBar = function(index, user){
 		let bar = $scope.searchResults[index];
 		let info = {bar_id:bar,user:user};
-		console.log($scope.searchResultsUsers);
 		$http.post($window.location.href+'addbar', info).success(function(data){
 			user.bars.push(data)
 			console.log("added you to the bar");
 		});
 	};
+	
+	// same as above but reverse
+	// assemble bar and user info in an obj and do a POST request
+	// remove bar from user's bars list (to change button from grn to red again)
 	$scope.removeBar = function(index, user){
 		let bar = $scope.searchResults[index];
 		let info = {bar_id:bar,user:user};
@@ -62,9 +72,22 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 			console.log("removed you from the bar");
 		});
 	};
+	
+	
+	// used for form input's data-ng-model
 	$scope.json = {};
+	
+	// list of businesses returned from Yelp Search
 	$scope.searchResults = {};
+	
+	// list of (lists of users' avatars), indexed in the same index as businesses - used to track users assoc. with bar 
 	$scope.searchResultsUsers = [];
+	
+	// tell server to search Yelp. POST request, then:
+	///update map
+	///for each business:
+	////get the list of users who added the bar
+	////using that list, build a list of avatar URLs, and push to searchResultsUsers
 	$scope.searchYelp = function(){
 		$scope.searchResults = {};			//reset old results
 		$scope.searchResultsUsers = [];		//reset old results
@@ -89,7 +112,6 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 				var promise1 = $scope.getBarUsers(index);
 				promise1.then(function(response) {
 				//	console.log(response.data);  ==> Array [] for empty bars, Array [ blah , blah ] for populated bars
-					console.log(response.data);
 				  response.data.forEach(function(userID){
 				  	//for each array of [ user._ids ], convert to [ user.avatarURLs ]
 					let info = {user_id:userID};
@@ -124,6 +146,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 			console.log(err);
 		});
 	};
+	
 	// initiate map
     angular.extend($scope, {
         center: {
