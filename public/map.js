@@ -17,7 +17,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 		};
 	
 	$scope.hasBar = function(index){	// determines if it's a add or remove bar button
-		var user = $scope.service1.user;
+		let user = $scope.service1.user;
+		let bar = $scope.searchResults[index];
 		function hasBar(){
 			for(let i=0;i<user.bars.length;i++){
 				for(let prop in user.bars[i]){
@@ -29,7 +30,6 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 			return false;
 		};
 		if(user){
-			let bar = $scope.searchResults[index];
 			return hasBar();	//return true if not no bar
 		}
 		return undefined;	//returning false will show add bar button
