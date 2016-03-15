@@ -1,11 +1,12 @@
 console.log("	APP/ROUTES.JS")
 
+//for mongoDB interaction routes
 var User = require('./models/user');
 var Bar = require('./models/bar');
+
 var Yelp = require('yelp');
 // load the auth variables
-var configAuth = require('../config/auth'); // use this one for testing
-
+var configAuth = require('../config/auth'); // for Yelp
 var yelp = new Yelp({
   consumer_key: configAuth.yelpAuth.consumer_key,
   consumer_secret: configAuth.yelpAuth.consumer_secret,
