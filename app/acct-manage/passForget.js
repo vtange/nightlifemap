@@ -1,4 +1,4 @@
-console.log("	APP/ACCT-MANAGE/PASSFORGET.JS")
+console.log("	APP/ACCT-MANAGE/PASSFORGET.JS");
 
 var User            = require('../models/user');
 var flash    		= require('connect-flash');

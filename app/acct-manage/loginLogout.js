@@ -1,4 +1,4 @@
-console.log("	APP/ACCT-MANAGE/LOGINLOGOUT.JS")
+console.log("	APP/ACCT-MANAGE/LOGINLOGOUT.JS");
 
 // app/acct-manage/loginLogout.js
 module.exports = function(app, passport) {
@@ -67,4 +67,4 @@ function isLoggedIn(req, res, next) {
 
     // if they aren't redirect them to the home page
     res.redirect('/');
-}
+};

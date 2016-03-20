@@ -25,8 +25,8 @@ app.use(express.static(__dirname + '/public'));     // set the static files loca
 app.use('/connect', express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser.urlencoded({ extended: false }))    // parse application/x-www-form-urlencoded
-app.use(bodyParser.json())    // parse application/json
+app.use(bodyParser.urlencoded({ extended: false }));    // parse application/x-www-form-urlencoded
+app.use(bodyParser.json());    // parse application/json
 app.use(methodOverride());                  // simulate DELETE and PUT
 
 app.set('view engine', 'ejs'); // set up ejs for templating

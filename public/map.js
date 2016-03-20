@@ -66,7 +66,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 						}
 					}
 					return index;
-				}
+				};
 		$http.post($window.location.href+'rembar', info).success(function(data){
 			user.bars.splice(findBarinUser(bar,user),1)
 			console.log("removed you from the bar");
@@ -124,7 +124,7 @@ app.controller('MainCtrl', ['$scope', '$http', '$window', 'memory', function($sc
 					})
 					.catch(function(err) {
 						throw err;
-					})
+					});
 				  });
 				})
 				.catch(function(err) {

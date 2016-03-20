@@ -1,4 +1,4 @@
-console.log("	APP/ROUTES.JS")
+console.log("	APP/ROUTES.JS");
 
 //for mongoDB interaction routes
 var User = require('./models/user');
@@ -111,7 +111,7 @@ module.exports = function(app) {
 						}
 					}
 					return index;
-				}
+				};
 
 					//remove the user to that bar
 					bar.users.splice(bar.users.indexOf(user._id),1);
