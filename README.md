@@ -15,10 +15,55 @@ Show User Avatars for Bars,
 #### Routes
 | GET        | POST           | PUT  | DELETE  |
 | ---------- |:--------------:| ----:| -------:|
-| Home       |                |      |         |
-|            |                |  |    |
+| Home (Map)  |   Yelp Search(update map)   |      |         |
+|            |  Bar (User++,User--)           |  |    |
+|            |  Find Bar(by id)           |  |    |
+|            |  Get Bar Avatars           |  |    |
 #### CSS
+ - none
 
 #### JS
+ - Map change center, add markers on search 
+ ```
+        ///change center of map
+          angular.extend($scope, {									
+					        center: {
+								lat: data.region.center.latitude,
+								lng: data.region.center.longitude,
+								zoom: 13
+							}
+          });
+	      data.businesses.forEach(function(business,index){
+
+				//marker each business
+				$scope.markers[index] = {									///append each marker to markers
+							lat: business.location.coordinate.latitude,
+							lng: business.location.coordinate.longitude,
+							message: businessTemplatify(business.name, index),
+							getMessageScope: function() {return $scope; },
+							focus: true,
+							draggable: false
+				};
+          });
+ ```
+ 
+- use strict mode with Angular. Must do for 'let' to work in Chrome
+```
+(function() {
+"use strict";
+    //start of function
+var app = angular.module('NightLifeMap', ['leaflet-directive', 'header', 'errSrc']);
+```
+
+- Used hashtable-like structure for
+```
+	// list of businesses returned from Yelp Search
+	$scope.searchResults = {};
+	
+	// list of (lists of users' avatars), indexed in the same index as businesses - used to track users assoc. with bar 
+  $scope.searchResultsUsers = [];
+```
 
 ##### Hindsight
+Should just have Bars track Users (add user id and avatar info to bar on add/remove), should've used ```populate``` instead of multiple HTTP requests.
+BarSchema [<bar info>,avatars:[string],users:[id]]
